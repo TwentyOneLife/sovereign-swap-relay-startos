@@ -14,19 +14,19 @@ packages.
 
 ## Phases
 
-- [x] **P0 Dockerfile.** Build the relay binary from a pinned `sovereign-swap` commit, two-stage,
-      base images pinned by digest. Verified: the image builds and produces the binary. (The binary
-      itself is exercised and proven to listen by `sovereign-swap`'s `tests/relay_server.rs`; the
-      in-container runtime is confirmed at the sideload step P6.)
-- [ ] **P1 manifest.** id `sovereign-swap-relay`, GPL/AGPL per the source, one volume `main`, the
-      image, no dependencies. (start-sdk `setupManifest`.)
-- [ ] **P2 main + interface.** Run the daemon with the config as env (`RELAY_BIND` and the limits);
-      a port-listening health check; one `api` interface on the WS port, bound on the LAN host and a
-      Tor onion (Tor-first). No TLS: content is end-to-end encrypted and Tor encrypts the hop.
+- [x] **P0 Dockerfile.** Builds the relay from `sovereign-swap`, two-stage, base images pinned by
+      digest; verified the image builds. Now pins the release tag `v0.1.0` (cut that release first).
+- [x] **P1 manifest.** id `sovereign-swap-relay`, AGPL, one volume `main`, the image, no
+      dependencies. Typechecks against start-sdk 2.0.9.
+- [x] **P2 main + interface.** The daemon runs with `RELAY_BIND` set; a port-listening health
+      check; one `api` interface on the WS port, bound on the LAN host and a Tor onion, plain `ws`
+      (content is end-to-end encrypted, Tor encrypts the hop). Typechecks and ncc-bundles.
 - [ ] **P3 config.** A settings form for the controls (max event bytes, max connections, events per
-      minute, store cap, retention), written out as the daemon's environment; safe defaults.
-- [ ] **P4 backups.** Back up the event store volume (optional: the store is ephemeral by design,
-      so this may be a no-op).
+      minute, store cap, retention), written out as the daemon's environment. Deferred: the relay
+      runs on safe defaults meanwhile; the form is the start-sdk's most intricate surface and is the
+      next step, written against the SDK rather than guessed.
+- [x] **P4 backups.** The event store is ephemeral (events carry a TTL), so the store subdir is
+      excluded; the volume's other contents are backed up. Typechecks.
 - [ ] **P5 CI + release.** CI builds the `.s9pk` on PR (as `shulcrum-startos` does); a tagged release
       builds, signs (`SHA256SUMS` + GPG), and verifies against the published key in an empty keyring.
 - [ ] **P6 sideload test.** Sideload onto the btc-blake StartOS sandbox (VM 103), install, open the

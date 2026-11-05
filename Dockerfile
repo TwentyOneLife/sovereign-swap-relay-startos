@@ -5,7 +5,7 @@ FROM rust@sha256:ed2c95ca377d6571b124b05e75e01207973ded639dce7d5542eb7bcd797e32a
 
 ARG SWAP_REPO=https://github.com/TwentyOneLife/sovereign-swap.git
 # Pinned to a commit, never a branch: a moving ref would make the image unreproducible.
-ARG SWAP_REF=90421f306e3e8eb7a1b2ed7c7ac42da668268836
+ARG SWAP_REF=v0.1.0
 
 RUN apt-get -qq update \
  && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends \

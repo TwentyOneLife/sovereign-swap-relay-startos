@@ -1,13 +1,3 @@
-node_modules/
+/node_modules
+/javascript
 *.s9pk
-SHA256SUMS
-SHA256SUMS.asc
-build/
-.DS_Store
-
-# never commit real secrets
-.env
-.env.local
-*.env
-!.env.example
-javascript/
