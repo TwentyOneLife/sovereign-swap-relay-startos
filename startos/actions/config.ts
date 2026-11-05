@@ -6,7 +6,8 @@ const { InputSpec, Value } = sdk
 export const inputSpec = InputSpec.of({
   maxEventBytes: Value.number({
     name: 'Max event size (bytes)',
-    description: 'Reject any event larger than this. A swap message is a few KiB.',
+    description:
+      'Reject any event larger than this. A swap message is a few KiB.',
     required: true,
     default: DEFAULTS.maxEventBytes,
     min: 1024,
@@ -31,7 +32,8 @@ export const inputSpec = InputSpec.of({
   }),
   storeCap: Value.number({
     name: 'Store capacity (events)',
-    description: 'Keep at most this many events; the oldest are dropped past it.',
+    description:
+      'Keep at most this many events; the oldest are dropped past it.',
     required: true,
     default: DEFAULTS.storeCap,
     min: 1,

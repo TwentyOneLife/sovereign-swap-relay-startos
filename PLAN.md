@@ -27,8 +27,8 @@ packages.
       `RelayConfig::default`; seeded on init. Typechecks and ncc-bundles.
 - [x] **P4 backups.** The event store is ephemeral (events carry a TTL), so the store subdir is
       excluded; the volume's other contents are backed up. Typechecks.
-- [ ] **P5 CI + release.** CI builds the `.s9pk` on PR (as `shulcrum-startos` does); a tagged release
-      builds, signs (`SHA256SUMS` + GPG), and verifies against the published key in an empty keyring.
+- [x] **P5 CI + release.** CI builds the `.s9pk` on PR (as `shulcrum-startos` does); a tagged release
+      builds, signs (`SHA256SUMS` + GPG), and verifies against the published key in an empty keyring. Done: ci.yml (hygiene, prettier, tsc, workflows-parse, build-s9pk artifact, no-internal-refs), release.yml (build-s9pk → SHA256SUMS → GPG-sign → verify in empty keyring → publish), the build-s9pk composite action, and Makefile. Needs the S9PK_BUILD_KEY repo secret (and GPG_* for signing) granted before a tag, same as sovereign-swap.
 - [ ] **P6 sideload test.** Sideload onto the btc-blake StartOS sandbox (VM 103), install, open the
       WS interface over Tor, run a swap through it, and run the homelab module-13 attacks against it.
 
