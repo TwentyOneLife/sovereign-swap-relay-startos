@@ -21,10 +21,10 @@ packages.
 - [x] **P2 main + interface.** The daemon runs with `RELAY_BIND` set; a port-listening health
       check; one `api` interface on the WS port, bound on the LAN host and a Tor onion, plain `ws`
       (content is end-to-end encrypted, Tor encrypts the hop). Typechecks and ncc-bundles.
-- [ ] **P3 config.** A settings form for the controls (max event bytes, max connections, events per
-      minute, store cap, retention), written out as the daemon's environment. Deferred: the relay
-      runs on safe defaults meanwhile; the form is the start-sdk's most intricate surface and is the
-      next step, written against the SDK rather than guessed.
+- [x] **P3 config.** A settings form (`actions/config.ts`, `fileModels/settings.json.ts`) for the
+      five controls, persisted in the volume and read reactively by `main` into the daemon's
+      environment, so editing a limit restarts the relay with it. Defaults match the binary's
+      `RelayConfig::default`; seeded on init. Typechecks and ncc-bundles.
 - [x] **P4 backups.** The event store is ephemeral (events carry a TTL), so the store subdir is
       excluded; the volume's other contents are backed up. Typechecks.
 - [ ] **P5 CI + release.** CI builds the `.s9pk` on PR (as `shulcrum-startos` does); a tagged release
