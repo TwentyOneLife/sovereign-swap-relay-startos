@@ -138,8 +138,13 @@ runs:
 
     - name: Build
       shell: bash
+      # Build the bundle before packing: start-cli's list-ingredients and pack both load
+      # javascript/index.js to enumerate the package (its image, icon and assets), and on a fresh
+      # checkout it does not exist yet, so the first make would find no ingredients and pack an empty
+      # reference. `make javascript/index.js` runs the SDK's check, lint and ncc build.
       run: |
         npm ci
+        make javascript/index.js
         make ${{ inputs.arch }}
 
     - name: Record what was signed
