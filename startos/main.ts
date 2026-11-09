@@ -1,6 +1,6 @@
 import { settingsJson, DEFAULTS } from './fileModels/settings.json'
 import { sdk } from './sdk'
-import { port } from './utils'
+import { port, relayInfo } from './utils'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info('Starting sovereign-swap-relay')
@@ -37,11 +37,30 @@ export const main = sdk.setupMain(async ({ effects }) => {
     },
     ready: {
       display: 'Relay',
-      fn: async () =>
-        sdk.healthCheck.checkPortListening(effects, port, {
-          successMessage: 'The relay is accepting connections',
-          errorMessage: 'The relay is not listening',
-        }),
+      // Application-level, not just "is the port bound". A wedged relay can keep the socket open
+      // while no longer serving, so we fetch its NIP-11 document and require a version field: that
+      // proves the HTTP handler is answering and the process is the relay, not a half-dead one.
+      fn: async () => {
+        try {
+          const info = await relayInfo()
+          if (typeof info.version === 'string' && info.version.length > 0) {
+            return {
+              result: 'success',
+              message: `The relay is serving (v${info.version})`,
+            }
+          }
+          return {
+            result: 'failure',
+            message:
+              'The relay answered but without a version; it may be starting or wedged',
+          }
+        } catch (e) {
+          return {
+            result: 'failure',
+            message: `The relay is not responding: ${e instanceof Error ? e.message : String(e)}`,
+          }
+        }
+      },
     },
     requires: [],
   })
