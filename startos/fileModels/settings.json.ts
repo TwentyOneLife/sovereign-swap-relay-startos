@@ -10,6 +10,8 @@ export const DEFAULTS = {
   maxEventsPerMin: 240,
   storeCap: 100000,
   retentionSecs: 604800,
+  // Price proxy (#106): off by default, so the relay stays minimal; the operator opts in.
+  priceProxy: false,
 }
 
 export const shape = z
@@ -19,6 +21,7 @@ export const shape = z
     maxEventsPerMin: z.number().int().catch(DEFAULTS.maxEventsPerMin),
     storeCap: z.number().int().catch(DEFAULTS.storeCap),
     retentionSecs: z.number().int().catch(DEFAULTS.retentionSecs),
+    priceProxy: z.boolean().catch(DEFAULTS.priceProxy),
   })
   .strip()
 
