@@ -27,6 +27,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     `RELAY_MAX_EVENTS_PER_MIN=${settings.maxEventsPerMin}`,
     `RELAY_STORE_CAP=${settings.storeCap}`,
     `RELAY_RETENTION_SECS=${settings.retentionSecs}`,
+    `RELAY_PRICE_PROXY=${settings.priceProxy ? '1' : '0'}`,
   ].join(' ')
 
   return sdk.Daemons.of(effects).addDaemon('primary', {

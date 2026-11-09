@@ -48,6 +48,16 @@ export const inputSpec = InputSpec.of({
     integer: true,
     units: 'seconds',
   }),
+  priceProxy: Value.toggle({
+    name: 'Price proxy',
+    description:
+      'Fetch the BTCB2/BTC reference price from nonkyc over the clear internet and serve it to ' +
+      'connected clients in the relay info document, so they read it over Tor instead of each fetching ' +
+      'the exchange directly (nonkyc blocks many Tor exits). Off by default. When on, this relay’s ' +
+      'own IP reaches nonkyc (never a client’s); no client IP or request is logged. The value is ' +
+      'advisory only and withheld once stale.',
+    default: DEFAULTS.priceProxy,
+  }),
 })
 
 export const config = sdk.Action.withInput(

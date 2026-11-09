@@ -5,7 +5,7 @@ FROM rust@sha256:ed2c95ca377d6571b124b05e75e01207973ded639dce7d5542eb7bcd797e32a
 
 ARG SWAP_REPO=https://github.com/TwentyOneLife/sovereign-swap.git
 # Pinned to a commit, never a branch: a moving ref would make the image unreproducible.
-ARG SWAP_REF=v0.6.1
+ARG SWAP_REF=v0.6.3
 
 RUN apt-get -qq update \
  && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends \
@@ -18,7 +18,7 @@ RUN cd src && cargo build --locked --release --bin sovereign-swap-relay
 
 FROM debian:bookworm-slim@sha256:40b107342c492725bc7aacbe93a49945445191ae364184a6d24fedb28172f6f7 AS final
 RUN apt-get -qq update \
- && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends ca-certificates \
+ && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends ca-certificates curl \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /build/src/target/release/sovereign-swap-relay /usr/local/bin/sovereign-swap-relay
 WORKDIR /mnt/relay
