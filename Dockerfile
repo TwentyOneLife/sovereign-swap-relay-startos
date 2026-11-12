@@ -16,7 +16,7 @@ WORKDIR /build
 RUN git clone "$SWAP_REPO" src && cd src && git checkout "$SWAP_REF"
 RUN cd src && cargo build --locked --release --bin sovereign-swap-relay
 
-FROM debian:bookworm-slim@sha256:40b107342c492725bc7aacbe93a49945445191ae364184a6d24fedb28172f6f7 AS final
+FROM debian:bookworm-slim@sha256:734a72b3d6142a71993b4bc580ca01d8ca687f77a2c422d96a961d3376b179bc AS final
 RUN apt-get -qq update \
  && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends ca-certificates curl \
  && rm -rf /var/lib/apt/lists/*
