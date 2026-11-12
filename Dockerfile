@@ -1,7 +1,7 @@
 # Builds sovereign-swap-relay from source, pinned by commit, so nothing is downloaded at install
 # time that would need verifying, and the whole chain from source to running relay stays auditable.
 # rust:1-slim-bookworm pinned by digest (reproducibility; Dependabot follows the tag beside it).
-FROM rust@sha256:ed2c95ca377d6571b124b05e75e01207973ded639dce7d5542eb7bcd797e32aa AS builder
+FROM rust@sha256:8a4e90c7946b74626488b1446f712c0fe0ed1a596cbd3d871684bc9c5433ae07 AS builder
 
 ARG SWAP_REPO=https://github.com/TwentyOneLife/sovereign-swap.git
 # Pinned to a commit, never a branch: a moving ref would make the image unreproducible.
