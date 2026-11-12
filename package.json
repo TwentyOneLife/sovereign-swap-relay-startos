@@ -7,7 +7,7 @@
     "test": "node --experimental-strip-types --no-warnings --test test/*.test.ts"
   },
   "dependencies": {
-    "@start9labs/start-sdk": "2.0.9"
+    "@start9labs/start-sdk": "4.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.17.1",
